@@ -38,6 +38,7 @@
 		A955B4F021422491000CD4C5 /* repolyzerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = repolyzerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A955B4F421422491000CD4C5 /* repolyzerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repolyzerTests.swift; sourceTree = "<group>"; };
 		A955B4F621422491000CD4C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9F51ADB21422BFA003BEB5C /* Notes.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = Notes.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 				A955B4E621422491000CD4C5 /* Assets.xcassets */,
 				A955B4E821422491000CD4C5 /* LaunchScreen.storyboard */,
 				A955B4EB21422491000CD4C5 /* Info.plist */,
+				A9F51ADB21422BFA003BEB5C /* Notes.json */,
 			);
 			path = repolyzer;
 			sourceTree = "<group>";
