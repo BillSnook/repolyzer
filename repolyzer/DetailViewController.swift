@@ -14,17 +14,15 @@ class DetailViewController: UIViewController {
 
 
 	func configureView() {
-		// Update the user interface for the detail item.
 		if let detail = detailItem {
 		    if let label = detailDescriptionLabel {
-		        label.text = detail.description
+		        label.text = detail.title
 		    }
 		}
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
 		configureView()
 	}
 
@@ -33,10 +31,9 @@ class DetailViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	var detailItem: NSDate? {
+	var detailItem: PullRequest? {
 		didSet {
-		    // Update the view.
-		    configureView()
+		    configureView()		// Update the view
 		}
 	}
 

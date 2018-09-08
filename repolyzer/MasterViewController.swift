@@ -26,12 +26,16 @@ class MasterViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		session.sendRequest( .pull_requests, completion: getResponse )
 		
 		if let split = splitViewController {
 		    let controllers = split.viewControllers
 		    detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
 		}
+		
+		tableView.estimatedRowHeight = 64.0
+		tableView.rowHeight = UITableViewAutomaticDimension
+		
+		session.sendRequest( .pull_requests, completion: getResponse )
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +56,6 @@ class MasterViewController: UITableViewController {
 			pullRequests = try decoder.decode([PullRequest].self, from: data)
 			print( "Number of pull requests: \(pullRequests.count)" )
 			DispatchQueue.main.async {
-				// UI update
 				self.tableView.reloadData()
 			}
 		} catch {
@@ -67,9 +70,9 @@ class MasterViewController: UITableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "showDetail" {
 		    if let indexPath = tableView.indexPathForSelectedRow {
-//		        let object = objects[indexPath.row] as! NSDate
+				let pr = pullRequests[indexPath.row]
 		        let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-//		        controller.detailItem = object
+		        controller.detailItem = pr
 		        controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
 		        controller.navigationItem.leftItemsSupplementBackButton = true
 		    }
@@ -87,11 +90,11 @@ class MasterViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+		let prCell = tableView.dequeueReusableCell(withIdentifier: "PullRequestCell", for: indexPath) as! PullRequestCell
 
 		let pr = pullRequests[indexPath.row]
-		cell.textLabel?.text = pr.title
-		return cell
+		prCell.cell( number: pr.number, state: pr.state, title: pr.title )
+		return prCell
 	}
 
 }
