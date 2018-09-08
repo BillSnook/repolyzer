@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9363317214355E7007FD3AB /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9363316214355E7007FD3AB /* SessionManager.swift */; };
 		A955B4DE2142248F000CD4C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955B4DD2142248F000CD4C5 /* AppDelegate.swift */; };
 		A955B4E02142248F000CD4C5 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955B4DF2142248F000CD4C5 /* MasterViewController.swift */; };
 		A955B4E22142248F000CD4C5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955B4E12142248F000CD4C5 /* DetailViewController.swift */; };
@@ -27,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A93633142143513A007FD3AB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		A9363316214355E7007FD3AB /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		A955B4DA2142248F000CD4C5 /* repolyzer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repolyzer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A955B4DD2142248F000CD4C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A955B4DF2142248F000CD4C5 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -83,10 +86,12 @@
 				A955B4DD2142248F000CD4C5 /* AppDelegate.swift */,
 				A955B4DF2142248F000CD4C5 /* MasterViewController.swift */,
 				A955B4E12142248F000CD4C5 /* DetailViewController.swift */,
+				A9363316214355E7007FD3AB /* SessionManager.swift */,
 				A955B4E32142248F000CD4C5 /* Main.storyboard */,
 				A955B4E621422491000CD4C5 /* Assets.xcassets */,
 				A955B4E821422491000CD4C5 /* LaunchScreen.storyboard */,
 				A955B4EB21422491000CD4C5 /* Info.plist */,
+				A93633142143513A007FD3AB /* README.md */,
 				A9F51ADB21422BFA003BEB5C /* Notes.json */,
 			);
 			path = repolyzer;
@@ -204,6 +209,7 @@
 			files = (
 				A955B4E22142248F000CD4C5 /* DetailViewController.swift in Sources */,
 				A955B4E02142248F000CD4C5 /* MasterViewController.swift in Sources */,
+				A9363317214355E7007FD3AB /* SessionManager.swift in Sources */,
 				A955B4DE2142248F000CD4C5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
