@@ -24,7 +24,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-38" y="-630"/>
+            <point key="canvasLocation" x="-46" y="-639"/>
         </scene>
         <!--Detail-->
         <scene sceneID="yUG-lL-AsK">
@@ -34,8 +34,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="20" y="323.5" width="335" height="20.5"/>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
+                                <rect key="frame" x="20" y="84" width="335" height="563"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -45,7 +45,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="20" symbolic="YES" id="Tsc-yG-G1q"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" id="jWN-iV-94e"/>
+                            <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="VUw-jc-0yf" secondAttribute="top" constant="20" id="eM6-Re-EtZ"/>
+                            <constraint firstItem="VUw-jc-0yf" firstAttribute="bottom" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="20" id="fsG-Kx-4O3"/>
                             <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" constant="20" symbolic="YES" id="tHV-ZD-HQj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
@@ -58,7 +59,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="708" y="128.18590704647679"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
@@ -168,7 +169,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708" y="-630.13493253373315"/>
+            <point key="canvasLocation" x="708" y="-639"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">

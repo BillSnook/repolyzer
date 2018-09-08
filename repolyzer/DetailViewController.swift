@@ -12,12 +12,12 @@ class DetailViewController: UIViewController {
 
 	@IBOutlet weak var detailDescriptionLabel: UILabel!
 
+	var diffData: Data?
 
 	func configureView() {
-		if let detail = detailItem {
-		    if let label = detailDescriptionLabel {
-		        label.text = detail.title
-		    }
+		guard let data = diffData else { return }
+		if let label = self.detailDescriptionLabel {
+			label.text = String( data: data, encoding: String.Encoding.utf8 )
 		}
 	}
 
@@ -31,12 +31,21 @@ class DetailViewController: UIViewController {
 		// Dispose of any resources that can be recreated.
 	}
 
-	var detailItem: PullRequest? {
-		didSet {
-		    configureView()		// Update the view
+	public func getResponse( _ data: Data?, _ error: Error? ) -> Void {
+	
+		if let err = error {
+			print( "Alert - error from sendRequest: \(err.localizedDescription)" )
+			return
+		}
+		guard let data = data, !data.isEmpty else {
+			print( "Alert - no data from sendRequest" )
+			return
+		}
+		self.diffData = data
+		
+		DispatchQueue.main.async {
+			self.configureView()
 		}
 	}
-
-
 }
 

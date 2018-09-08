@@ -35,7 +35,7 @@ class MasterViewController: UITableViewController {
 		tableView.estimatedRowHeight = 64.0
 		tableView.rowHeight = UITableViewAutomaticDimension
 		
-		session.sendRequest( .pull_requests, completion: getResponse )
+		session.sendRequest( "https://api.github.com/repos/magicalpanda/MagicalRecord/pulls", completion: getResponse )
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -49,8 +49,17 @@ class MasterViewController: UITableViewController {
 	}
 
 
-	public func getResponse( _ data: Data, _ error: Error? ) -> Void {
+	public func getResponse( _ data: Data?, _ error: Error? ) -> Void {
 	
+		if let err = error {
+			print( "Alert - error from sendRequest: \(err.localizedDescription)" )
+			return
+		}
+		guard let data = data else {
+			print( "Alert - no data from sendRequest" )
+			return
+		}
+		
 		let decoder = JSONDecoder()
 		do {
 			pullRequests = try decoder.decode([PullRequest].self, from: data)
@@ -59,8 +68,7 @@ class MasterViewController: UITableViewController {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error converting data to JSON")
-			print(error)
+			print("Error converting data to JSON: \(error.localizedDescription)" )
 		}
 
 	}
@@ -72,7 +80,7 @@ class MasterViewController: UITableViewController {
 		    if let indexPath = tableView.indexPathForSelectedRow {
 				let pr = pullRequests[indexPath.row]
 		        let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-		        controller.detailItem = pr
+				session.sendRequest( pr.diff_url, completion: controller.getResponse )
 		        controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
 		        controller.navigationItem.leftItemsSupplementBackButton = true
 		    }

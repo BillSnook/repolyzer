@@ -8,14 +8,10 @@
 
 import Foundation
 
-public typealias RepoResponse = ( _ data: Data, _ error: Error? ) -> Void
+public typealias RepoResponse = ( _ data: Data?, _ error: Error? ) -> Void
 
 let authenticateKey = "billsnook:sidewinder1.1"
 
-
-enum Sources: String {
-	case pull_requests		= "repos/magicalpanda/MagicalRecord/pulls"
-}
 
 class SessionManager {
 	
@@ -30,9 +26,9 @@ class SessionManager {
 		repoName = newRepoName
 	}
 	
-	func sendRequest( _ request: Sources, completion: @escaping RepoResponse) {
+	func sendRequest( _ request: String, completion: @escaping RepoResponse) {
 
-		var urlComps = "https://api.github.com/" + request.rawValue
+		var urlComps = request
 		if var urlComponents = URLComponents(string: urlComps) {
 			urlComponents.query = "state=open"
 			guard let url = urlComponents.url else { return }
@@ -42,6 +38,7 @@ class SessionManager {
 				defer { self.dataTask = nil }
 				if let error = error {
 					self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+					completion(nil, error)
 				} else if let data = data,
 					let response = response as? HTTPURLResponse,
 					response.statusCode == 200 {
