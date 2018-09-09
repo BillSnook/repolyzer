@@ -80,6 +80,7 @@ class MasterViewController: UITableViewController {
 		    if let indexPath = tableView.indexPathForSelectedRow {
 				let pr = pullRequests[indexPath.row]
 		        let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+				controller.pullRequest = pr
 				session.sendRequest( pr.diff_url, completion: controller.getResponse )
 		        controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
 		        controller.navigationItem.leftItemsSupplementBackButton = true
