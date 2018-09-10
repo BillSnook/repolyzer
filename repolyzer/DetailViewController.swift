@@ -80,6 +80,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		// Dispose of any resources that can be recreated.
 	}
 
+	override func viewDidLayoutSubviews() {
+		DispatchQueue.main.async {
+			self.diffTable.reloadData()
+		}
+	}
+
 	public func getResponse( _ data: Data?, _ error: Error? ) -> Void {
 	
 		if let err = error {
@@ -132,13 +138,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		
 		guard let diffEntry = viewModel?.diffList[indexPath.section] else { return pdCell }
 		if diffEntry.diffLines.count > maxDiffRows {
-			pdCell.cell( header: "Too many diffs to display", left: " ", right: " " )
+			pdCell.cell( header: "Too many diffs to display", data: nil )
 			return pdCell
 		}
 		let diffLineHeader = diffEntry.diffLines[indexPath.row].lineRange
-		let leftLines = diffEntry.diffArray[indexPath.row].leftLines
-		let rightLines = diffEntry.diffArray[indexPath.row].rightLines
-		pdCell.cell( header: diffLineHeader, left: leftLines, right: rightLines )
+		pdCell.cell( header: diffLineHeader, data: diffEntry.diffArray[indexPath.row] )
 		return pdCell
 	}
 

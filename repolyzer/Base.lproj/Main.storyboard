@@ -133,22 +133,8 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yLM-3a-SDp" userLabel="LeftView">
                                                             <rect key="frame" x="0.0" y="0.0" width="186" height="93"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NtR-dM-46p">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="93"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                    <variation key="heightClass=regular-widthClass=compact">
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                                                    </variation>
-                                                                </label>
-                                                            </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="NtR-dM-46p" firstAttribute="leading" secondItem="yLM-3a-SDp" secondAttribute="leading" id="1wH-dj-veY"/>
-                                                                <constraint firstAttribute="trailing" secondItem="NtR-dM-46p" secondAttribute="trailing" id="GZy-98-QPQ"/>
-                                                                <constraint firstItem="NtR-dM-46p" firstAttribute="top" secondItem="yLM-3a-SDp" secondAttribute="top" id="Iwm-nI-iRj"/>
-                                                                <constraint firstAttribute="bottom" secondItem="NtR-dM-46p" secondAttribute="bottom" id="b3b-UX-x3Z"/>
+                                                                <constraint firstAttribute="height" constant="93" id="ggb-0H-HE7"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wje-6Z-TZk" userLabel="CenterLine">
@@ -160,22 +146,8 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tp-AM-OVz" userLabel="RightView">
                                                             <rect key="frame" x="189" y="0.0" width="186" height="93"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePM-he-dMu">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="93"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                    <variation key="heightClass=regular-widthClass=compact">
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                                                    </variation>
-                                                                </label>
-                                                            </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="ePM-he-dMu" secondAttribute="trailing" id="2i1-HJ-DUM"/>
-                                                                <constraint firstItem="ePM-he-dMu" firstAttribute="top" secondItem="5tp-AM-OVz" secondAttribute="top" id="P4g-5f-fV6"/>
-                                                                <constraint firstAttribute="bottom" secondItem="ePM-he-dMu" secondAttribute="bottom" id="cnb-0G-p9U"/>
-                                                                <constraint firstItem="ePM-he-dMu" firstAttribute="leading" secondItem="5tp-AM-OVz" secondAttribute="leading" id="lna-v5-khQ"/>
+                                                                <constraint firstAttribute="height" constant="93" id="wdD-iU-0FV"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -206,9 +178,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="leftLabel" destination="NtR-dM-46p" id="tps-J8-jQe"/>
+                                            <outlet property="leftHeightConstraint" destination="ggb-0H-HE7" id="Q5d-aq-FPd"/>
                                             <outlet property="leftView" destination="yLM-3a-SDp" id="omh-Os-4gv"/>
-                                            <outlet property="rightLabel" destination="ePM-he-dMu" id="tUX-jI-CFt"/>
+                                            <outlet property="rightHeightConstraint" destination="wdD-iU-0FV" id="Q1G-qV-C1U"/>
                                             <outlet property="rightView" destination="5tp-AM-OVz" id="KJr-hx-ufL"/>
                                             <outlet property="showDiffs" destination="zyb-aO-NvE" id="uYb-qF-NOv"/>
                                         </connections>

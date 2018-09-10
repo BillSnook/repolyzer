@@ -16,18 +16,23 @@ struct LineAddresses {
 	var remSize = 0
 }
 
+class GhostLine {
+	var text = ""
+	var show = false
+	var add = false
+	var remove = false
+}
+
 class DiffLines {
-	
 	var lineRange = ""
 	var lines: [String] = []
 }
 
 class DiffArray {
-	var leftLines = ""
-	var rightLines = ""
+	var leftLines: [GhostLine] = []
+	var rightLines: [GhostLine] = []
 
 	var lines: LineAddresses?
-//	var lineNumber = 0
 }
 
 class DiffEntry {
@@ -83,7 +88,7 @@ class DetailViewModel {
 					if ( firstLineArray.count >= 1 ) {	// < -11,6 +11,7 > and rest of line then everything else from that diff sequence
 						let secondLineArray = firstLineArray[0].components(separatedBy: " @@")	// Get just file diff range
 						diffLine.lineRange = secondLineArray[0]
-						for i in 1..<firstLineArray.count {				// Get remainder of lines
+						for i in 1..<firstLineArray.count - 1 {				// Get remainder of lines
 							diffLine.lines.append( firstLineArray[i] )
 						}
 					}
@@ -125,8 +130,6 @@ class DetailViewModel {
 
 	func getAddressesFromHeader( _ header: String ) -> LineAddresses {
 		
-//		let diffLineHeader = diffEntry.diffLines[indexPath.row].lineRange
-
 		var lines = LineAddresses()
 		var lineNumbers = header
 		lineNumbers.remove(at: lineNumbers.startIndex)	// Remove initial '-'
@@ -149,38 +152,85 @@ class DetailViewModel {
 
 	func createDiffArrays() {
 		
-		for fileDiff in diffList  {
-			for diffLine in fileDiff.diffLines {
+		for fileDiff in diffList  {					// For each file
+			for diffLine in fileDiff.diffLines {	// For each diff segment for file
 				let diffArray = DiffArray()
 				let lineNumbers = getAddressesFromHeader( diffLine.lineRange )
 				diffArray.lines = lineNumbers
-				var leftText = ""
-				var rightText = ""
 				var addLineNo = Int( lineNumbers.addLine )
+				var addSequence = 0
 				var remLineNo = Int( lineNumbers.remLine )
-				for entry in diffLine.lines {	// Each diff display line
+				var remSequence = 0
+				var inputIndex = 0
+				var rightOutputIndex = 0
+				var leftOutputIndex = 0
+				print( "diffLine.lines.count: \(diffLine.lines.count)" )
+				while inputIndex < diffLine.lines.count {	// Walk lines from input diff text
+					print( "inputIndex: \(inputIndex)" )
+					let entry = diffLine.lines[inputIndex]	// Get first line
 					if entry.isEmpty {
 						continue
 					}
-					if entry[entry.startIndex] == "+" {	// This is an added line
-						rightText += String( addLineNo ) + "  " + entry + "\n"
-						leftText += "\n"
-						addLineNo += 1
+					if entry[entry.startIndex] == "-" {	// This is a removed line
+						diffArray.leftLines.append( GhostLine() )
+						let leftline = diffArray.leftLines[leftOutputIndex]
+						leftline.text += String( remLineNo ) + "  " + entry + "\n"
+						leftline.show = true
+						leftline.remove = true
+						leftOutputIndex += 1
+						remLineNo += 1
+						remSequence += 1
 					} else {
-						if entry[entry.startIndex] == "-" {	// This is a removed line
-							rightText += "\n"
-							leftText += String( remLineNo ) + "  " + entry + "\n"
-							remLineNo += 1
-						} else {
-							rightText += String( addLineNo ) + "  " + entry + "\n"
-							leftText += String( remLineNo ) + "  " + entry + "\n"
+						if entry[entry.startIndex] == "+" {	// This is an added line
+							diffArray.rightLines.append( GhostLine() )
+							let rightline = diffArray.rightLines[rightOutputIndex]
+							rightline.text += String( addLineNo ) + "  " + entry + "\n"
+							rightline.show = true
+							rightline.add = true
+							rightOutputIndex += 1
 							addLineNo += 1
+							if remSequence > 0 {
+								remSequence -= 1
+							} else {
+								diffArray.leftLines.append( GhostLine() )
+								let leftline = diffArray.leftLines[leftOutputIndex]
+								leftline.text += String( remLineNo ) + "  " + entry + "\n"
+								leftline.show = false
+								leftOutputIndex += 1
+							}
+							addSequence += 1
+						} else {
+							diffArray.leftLines.append( GhostLine() )
+							let leftline = diffArray.leftLines[leftOutputIndex]
+							leftline.text += String( remLineNo ) + "  " + entry + "\n"
+							leftline.show = true
+							diffArray.rightLines.append( GhostLine() )
+							let rightline = diffArray.rightLines[rightOutputIndex]
+							rightline.text += String( addLineNo ) + "  " + entry + "\n"
+							if remSequence > 0 {
+								rightline.show = false
+							} else {
+								rightline.show = true
+								addLineNo += 1
+							}
 							remLineNo += 1
+							rightOutputIndex += 1
+							leftOutputIndex += 1
+							addSequence = 0
+							if remSequence > 0 {
+								diffArray.rightLines.append( GhostLine() )
+								let rightline = diffArray.rightLines[rightOutputIndex]
+								rightline.text += String( addLineNo ) + "  " + entry + "\n"
+								rightline.show = true
+								rightline.add = false
+								rightOutputIndex += 1
+								addLineNo += 1
+								remSequence = 0
+							}
 						}
 					}
+					inputIndex += 1
 				}
-				diffArray.leftLines = leftText
-				diffArray.rightLines = rightText
 				fileDiff.diffArray.append( diffArray )
 			}
 		}
