@@ -17,10 +17,11 @@ class PullDiffCell: UITableViewCell {
 	@IBOutlet weak var rightView: UIView!
 	@IBOutlet weak var rightLabel: UILabel!
 	
-	
-	public func cell( header: String, list: String ) {
+	public func cell( header: String, left: String, right: String ) {
 		showDiffs.text = header
-		leftLabel.text = list
-		rightLabel.text = list
+		
+		leftLabel.text = left
+		rightLabel.text = right
 	}
+	
 }

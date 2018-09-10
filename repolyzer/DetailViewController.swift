@@ -94,14 +94,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	
 	// Mark - TableView delegate and source
 	func numberOfSections(in tableView: UITableView) -> Int {
-		if let count = viewModel?.diffList.diffEntries.count {
+		if let count = viewModel?.diffList.count {
 			return count
 		}
 		return 0
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if var rows = viewModel?.diffList.diffEntries[section].diffLines.count {
+		if var rows = viewModel?.diffList[section].diffLines.count {
 			if rows > maxDiffRows {
 				rows = 1
 			}
@@ -113,22 +113,32 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let pdCell = tableView.dequeueReusableCell(withIdentifier: "PullDiffCell", for: indexPath) as! PullDiffCell
 		
-		guard let diffEntry = viewModel?.diffList.diffEntries[indexPath.section] else { return pdCell }
+		guard let diffEntry = viewModel?.diffList[indexPath.section] else { return pdCell }
 		if diffEntry.diffLines.count > maxDiffRows {
-			pdCell.cell( header: "Too many diffs to display", list: "" )
+			pdCell.cell( header: "Too many diffs to display", left: "", right: "" )
 			return pdCell
 		}
 		let diffLineHeader = diffEntry.diffLines[indexPath.row].lineRange
-		let diffLines = diffEntry.diffLines[indexPath.row].line
-		pdCell.cell( header: diffLineHeader, list: diffLines )
+		let leftLines = diffEntry.diffArray[indexPath.row].leftLines
+		let rightLines = diffEntry.diffArray[indexPath.row].rightLines
+		pdCell.cell( header: diffLineHeader, left: leftLines, right: rightLines )
 		return pdCell
 	}
 
-	func tableView(_ tableView: UITableView, titleForHeaderInSection: Int) -> String? {
+	func tableView(_ tableView: UITableView, heightForHeaderInSection: Int) -> CGFloat {
 		
-		let range = viewModel?.diffList.diffEntries[titleForHeaderInSection].fileName
-		return range ?? "Missing filename"
+		return 36.0
 	}
-
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection: Int) -> UIView? {
+		
+		let view = UIView( frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: 36.0))
+		let label = UILabel( frame: CGRect(x: 8.0, y: 0.0, width: tableView.frame.size.width, height: 36.0))
+		let fileName = viewModel?.diffList[viewForHeaderInSection].fileName
+		label.text = fileName ?? "Missing filename"
+		label.backgroundColor = UIColor( red: 120/255, green: 160/255, blue: 1.0, alpha: 0.33)
+		view.addSubview( label )
+		return view
+	}
 }
 
