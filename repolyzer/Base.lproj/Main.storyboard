@@ -70,7 +70,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration" identifier="UIA_StatusView">
                                             <bool key="isElement" value="YES"/>
                                         </accessibility>
@@ -90,7 +90,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="61H-VN-5xl"/>
                                     <constraint firstItem="JhU-2h-VdX" firstAttribute="leading" secondItem="PMu-sI-VMK" secondAttribute="trailing" constant="8" id="7IC-Gu-KxD"/>
@@ -104,7 +104,7 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PtR-IG-52m">
                                 <rect key="frame" x="0.0" y="128" width="375" height="539"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PullDiffCell" rowHeight="122" id="ZRr-dY-sao" customClass="PullDiffCell" customModule="repolyzer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="122"/>
@@ -114,23 +114,28 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diffs Range" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zyb-aO-NvE">
-                                                    <rect key="frame" x="16" y="4" width="359" height="30"/>
+                                                    <rect key="frame" x="16" y="4" width="359" height="24"/>
                                                     <color key="backgroundColor" red="0.62475178021559552" green="0.79189429200275374" blue="1" alpha="0.3378371147260274" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="UHs-Gt-UhZ"/>
+                                                        <constraint firstAttribute="height" constant="30" id="UHs-Gt-UhZ">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="24"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    </variation>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kxD-Dd-EMv" userLabel="DiffView">
-                                                    <rect key="frame" x="0.0" y="34" width="375" height="87"/>
+                                                    <rect key="frame" x="0.0" y="28" width="375" height="93"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yLM-3a-SDp" userLabel="LeftView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="186" height="87"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="186" height="93"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NtR-dM-46p">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="87"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="93"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -147,17 +152,17 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wje-6Z-TZk" userLabel="CenterLine">
-                                                            <rect key="frame" x="187" y="0.0" width="1" height="87"/>
+                                                            <rect key="frame" x="187" y="0.0" width="1" height="93"/>
                                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="1" id="091-e8-Jwg"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tp-AM-OVz" userLabel="RightView">
-                                                            <rect key="frame" x="189" y="0.0" width="186" height="87"/>
+                                                            <rect key="frame" x="189" y="0.0" width="186" height="93"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePM-he-dMu">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="87"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="93"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -215,7 +220,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="PtR-IG-52m" firstAttribute="trailing" secondItem="VUw-jc-0yf" secondAttribute="trailing" id="Bmu-nY-NGz"/>
                             <constraint firstItem="PtR-IG-52m" firstAttribute="top" secondItem="tDM-kr-L7x" secondAttribute="bottom" id="PuF-M7-Cjv"/>
@@ -239,6 +244,7 @@
                         <outlet property="diffState" destination="8EG-Rt-7Cl" id="uAd-Kc-4RT"/>
                         <outlet property="diffTable" destination="PtR-IG-52m" id="vrf-F1-Q1b"/>
                         <outlet property="diffTitle" destination="JhU-2h-VdX" id="XQh-pe-quA"/>
+                        <outlet property="headerView" destination="tDM-kr-L7x" id="bud-Ob-Zcs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
@@ -266,7 +272,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PullRequestCell" rowHeight="64" id="Oih-OR-wc3" customClass="PullRequestCell" customModule="repolyzer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="64"/>
@@ -301,7 +307,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <accessibility key="accessibilityConfiguration" identifier="UIA_StatusView">
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
@@ -332,6 +338,7 @@
                                         <constraint firstItem="hvp-XY-aS3" firstAttribute="leading" secondItem="Obd-Tu-FiK" secondAttribute="leading" id="oe4-PJ-PET"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.67170814560000003" green="0.86551098609999999" blue="0.98919683690000004" alpha="0.19889768839999999" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="UIA_PullRequestCell">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>

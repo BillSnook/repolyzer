@@ -79,15 +79,13 @@ class DetailViewModel {
 				let diffLine = DiffLines()	// Have line numbers and diff texts
 				let diffLineArray = diff.components(separatedBy: "\n@@ ")
 				if let firstLineSegment = diffLineArray.first {
-					let firstLineArray = firstLineSegment.components(separatedBy: "\n")
+					let firstLineArray = firstLineSegment.components(separatedBy: "\n")	// Get all lines
 					if ( firstLineArray.count >= 1 ) {	// < -11,6 +11,7 > and rest of line then everything else from that diff sequence
-						let secondLineArray = firstLineArray[0].components(separatedBy: " @@")
+						let secondLineArray = firstLineArray[0].components(separatedBy: " @@")	// Get just file diff range
 						diffLine.lineRange = secondLineArray[0]
-					}
-					let remainderLineArray = firstLineSegment.components(separatedBy: " @@")
-					if ( remainderLineArray.count == 2 ) {	// < -11,6 +11,7 > section then everything else from that diff sequence
-						let diffInOneLine = remainderLineArray[1]
-						diffLine.lines = diffInOneLine.components(separatedBy: "\n")
+						for i in 1..<firstLineArray.count {				// Get remainder of lines
+							diffLine.lines.append( firstLineArray[i] )
+						}
 					}
 				}
 				diffEntry.diffLines.append( diffLine )
@@ -98,12 +96,28 @@ class DetailViewModel {
 	
 	func filenameFromSegment( _ rawFilenameString: String ) -> String {
 
-		let firstArray = rawFilenameString.components(separatedBy: "\n--- a/")	// diff --git a/...
+		var firstArray = rawFilenameString.components(separatedBy: "\n--- a/")	// diff --git a/...
 		if firstArray.count > 1 {
 			let fileNamePlus = firstArray[1]	// Second component contains filename plus another line
 			let secondArray = fileNamePlus.components(separatedBy: "\n")
 			if secondArray.count > 0 {
 				return secondArray[0]
+			}
+		} else {		// Maybe file was added
+			firstArray = rawFilenameString.components(separatedBy: "\n+++ b/")	// diff --git a/...
+			if firstArray.count > 1 {
+				let fileNamePlus = firstArray[1]	// Second component contains filename plus another line
+				let secondArray = fileNamePlus.components(separatedBy: "\n")
+				if secondArray.count > 0 {
+					return secondArray[0]
+				}
+			}
+		}
+		firstArray = rawFilenameString.components(separatedBy: "\nrename from ")
+		if firstArray.count > 1 {
+			let secondArray = firstArray[1].components(separatedBy: "\n")
+			if secondArray.count > 0 {
+				return "Rename " + secondArray[0]
 			}
 		}
 		return "No Filename Found"
@@ -119,11 +133,15 @@ class DetailViewModel {
 		let lineNumArray = lineNumbers.components(separatedBy: " +")
 		if lineNumArray.count == 2 {
 			let removeArray = lineNumArray[0].components(separatedBy: ",")
-			lines.remLine = Int( removeArray[0] ) ?? 0
-			lines.remSize = Int( removeArray[1] ) ?? 0
+			if removeArray.count == 2 {
+				lines.remLine = Int( removeArray[0] ) ?? 0
+				lines.remSize = Int( removeArray[1] ) ?? 0
+			}
 			let addArray = lineNumArray[1].components(separatedBy: ",")
-			lines.addLine = Int( addArray[0] ) ?? 0
-			lines.addSize = Int( addArray[1] ) ?? 0
+			if addArray.count == 2 {
+				lines.addLine = Int( addArray[0] ) ?? 0
+				lines.addSize = Int( addArray[1] ) ?? 0
+			}
 		}
 		print( "Remove: \(lines.remLine),\(lines.remSize); Add: \(lines.addLine),\(lines.addSize)" )
 		return lines

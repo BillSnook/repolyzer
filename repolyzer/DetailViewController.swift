@@ -11,12 +11,14 @@ import UIKit
 
 let showRawData = false		// For testing
 
-let maxDiffRows =	4
+let maxDiffRows = 8
+let nominalSectionHeaderHeight: CGFloat = 36.0
 
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 	@IBOutlet weak var detailDescriptionLabel: UILabel!
+	@IBOutlet weak var headerView: UIView!
 	@IBOutlet weak var diffTable: UITableView!
 	
 	@IBOutlet weak var diffTitle: UILabel!
@@ -32,6 +34,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		
 		guard let data = diffData else {
 			if let label = self.detailDescriptionLabel {
+				headerView.isHidden = true
 				diffTable.isHidden = true
 				label.isHidden = false
 				label.textAlignment = .left
@@ -50,9 +53,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		}
 
 		if showRawData {
+			headerView.isHidden = true
 			diffTable.isHidden = true
 		} else {
 			viewModel = DetailViewModel( with: data )
+			headerView.isHidden = false
 			diffTable.isHidden = false
 			diffTable.reloadData()
 		}
@@ -78,11 +83,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	public func getResponse( _ data: Data?, _ error: Error? ) -> Void {
 	
 		if let err = error {
-			print( "Alert - error from sendRequest: \(err.localizedDescription)" )
+			showAlert(title: "Warning", message: "Error from sendRequest: \(err.localizedDescription)")
 			return
 		}
 		guard let data = data, !data.isEmpty else {
-			print( "Alert - no data from sendRequest" )
+			showAlert(title: "Warning", message: "No data received from sendRequest")
+			return
+		}
+		if data.count > 500000 {
+			showAlert(title: "Warning", message: "Data received is way too long - \(data.count) bytes!")
 			return
 		}
 		self.diffData = data
@@ -90,6 +99,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		DispatchQueue.main.async {
 			self.configureView()
 		}
+	}
+	
+	func showAlert( title: String, message: String ) {
+		
+		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+		alertController.addAction(defaultAction)
+		present(alertController, animated: true, completion: nil)
 	}
 	
 	// Mark - TableView delegate and source
@@ -115,7 +132,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		
 		guard let diffEntry = viewModel?.diffList[indexPath.section] else { return pdCell }
 		if diffEntry.diffLines.count > maxDiffRows {
-			pdCell.cell( header: "Too many diffs to display", left: "", right: "" )
+			pdCell.cell( header: "Too many diffs to display", left: " ", right: " " )
 			return pdCell
 		}
 		let diffLineHeader = diffEntry.diffLines[indexPath.row].lineRange
@@ -127,16 +144,17 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection: Int) -> CGFloat {
 		
-		return 36.0
+		return nominalSectionHeaderHeight
 	}
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection: Int) -> UIView? {
 		
-		let view = UIView( frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: 36.0))
-		let label = UILabel( frame: CGRect(x: 8.0, y: 0.0, width: tableView.frame.size.width, height: 36.0))
+		let view = UIView( frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: nominalSectionHeaderHeight))
+		let label = UILabel( frame: CGRect(x: 8.0, y: 0.0, width: tableView.frame.size.width, height: nominalSectionHeaderHeight))
 		let fileName = viewModel?.diffList[viewForHeaderInSection].fileName
+		label.font = UIFont.systemFont( ofSize: 20.0 )
 		label.text = fileName ?? "Missing filename"
-		label.backgroundColor = UIColor( red: 120/255, green: 160/255, blue: 1.0, alpha: 0.33)
+		label.backgroundColor = UIColor( red: 120/255, green: 160/255, blue: 1.0, alpha: 0.8)
 		view.addSubview( label )
 		return view
 	}

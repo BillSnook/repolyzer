@@ -20,7 +20,7 @@ struct PullRequest: Codable {
 class MasterViewController: UITableViewController {
 
 	var detailViewController: DetailViewController? = nil
-	var session = SessionManager( "" )
+	var session = SessionManager()
 	var pullRequests: [PullRequest] = []
 
 
@@ -78,6 +78,7 @@ class MasterViewController: UITableViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "showDetail" {
 		    if let indexPath = tableView.indexPathForSelectedRow {
+				tableView.deselectRow( at: indexPath, animated: true )
 				let pr = pullRequests[indexPath.row]
 		        let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
 				controller.pullRequest = pr

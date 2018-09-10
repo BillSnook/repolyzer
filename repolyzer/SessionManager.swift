@@ -15,15 +15,11 @@ let authenticateKey = "billsnook:sidewinder1.1"
 
 class SessionManager {
 	
-	let repoSession = URLSession(configuration: .default)
+	let repoSession: URLSession // = URLSession(configuration: .default)
 	var dataTask: URLSessionDataTask?
-	var repoName = "MagicRecord"
-	var errorMessage = ""
 	
-	init( _ withRepo: String? ) {
-		guard let newRepoName = withRepo,
-			  !newRepoName.isEmpty else { return }
-		repoName = newRepoName
+	init() {
+		repoSession = URLSession(configuration: .default)
 	}
 	
 	func sendRequest( _ request: String, completion: @escaping RepoResponse) {
@@ -37,13 +33,14 @@ class SessionManager {
 			dataTask = repoSession.dataTask(with: urlRequest) { data, response, error in
 				defer { self.dataTask = nil }
 				if let error = error {
-					self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
 					completion(nil, error)
 				} else if let data = data,
 					let response = response as? HTTPURLResponse,
 					response.statusCode == 200 {
 					
 					completion(data, nil)
+				} else {
+					completion(nil, nil)
 				}
 			}
 			dataTask?.resume()
