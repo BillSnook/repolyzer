@@ -82,7 +82,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 	override func viewDidLayoutSubviews() {
 		DispatchQueue.main.async {
-			self.diffTable.reloadData()
+			self.diffTable.reloadData()	// For rotations, to adjust for display size differences
 		}
 	}
 

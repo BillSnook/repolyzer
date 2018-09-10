@@ -16,11 +16,11 @@ struct LineAddresses {
 	var remSize = 0
 }
 
-class GhostLine {
+class DisplayLine {
 	var text = ""
-	var show = false
-	var add = false
-	var remove = false
+	var show = true	// To set white or black textColors to hide text
+	var add = false		// To set blue highlighting on line
+	var remove = false	// To set red highlighting on line
 }
 
 class DiffLines {
@@ -29,8 +29,8 @@ class DiffLines {
 }
 
 class DiffArray {
-	var leftLines: [GhostLine] = []
-	var rightLines: [GhostLine] = []
+	var leftLines: [DisplayLine] = []
+	var rightLines: [DisplayLine] = []
 
 	var lines: LineAddresses?
 }
@@ -53,15 +53,6 @@ class DetailViewModel {
 		diffString = String( data: diff, encoding: String.Encoding.utf8 ) ?? ""
 		
 		seperateFiles()
-		for entry in diffList  {
-			print( entry.fileName )
-			for diffLine in entry.diffLines {
-				print( diffLine.lineRange )
-//				for line in diffLine.lines {
-//					print( line )
-//				}
-			}
-		}
 		
 		createDiffArrays()
 	}
@@ -88,7 +79,7 @@ class DetailViewModel {
 					if ( firstLineArray.count >= 1 ) {	// < -11,6 +11,7 > and rest of line then everything else from that diff sequence
 						let secondLineArray = firstLineArray[0].components(separatedBy: " @@")	// Get just file diff range
 						diffLine.lineRange = secondLineArray[0]
-						for i in 1..<firstLineArray.count - 1 {				// Get remainder of lines
+						for i in 1..<firstLineArray.count {				// Get remainder of lines
 							diffLine.lines.append( firstLineArray[i] )
 						}
 					}
@@ -146,7 +137,6 @@ class DetailViewModel {
 				lines.addSize = Int( addArray[1] ) ?? 0
 			}
 		}
-		print( "Remove: \(lines.remLine),\(lines.remSize); Add: \(lines.addLine),\(lines.addSize)" )
 		return lines
 	}
 
@@ -164,15 +154,14 @@ class DetailViewModel {
 				var inputIndex = 0
 				var rightOutputIndex = 0
 				var leftOutputIndex = 0
-				print( "diffLine.lines.count: \(diffLine.lines.count)" )
 				while inputIndex < diffLine.lines.count {	// Walk lines from input diff text
-					print( "inputIndex: \(inputIndex)" )
 					let entry = diffLine.lines[inputIndex]	// Get first line
+					inputIndex += 1
 					if entry.isEmpty {
 						continue
 					}
 					if entry[entry.startIndex] == "-" {	// This is a removed line
-						diffArray.leftLines.append( GhostLine() )
+						diffArray.leftLines.append( DisplayLine() )
 						let leftline = diffArray.leftLines[leftOutputIndex]
 						leftline.text += String( remLineNo ) + "  " + entry + "\n"
 						leftline.show = true
@@ -182,7 +171,7 @@ class DetailViewModel {
 						remSequence += 1
 					} else {
 						if entry[entry.startIndex] == "+" {	// This is an added line
-							diffArray.rightLines.append( GhostLine() )
+							diffArray.rightLines.append( DisplayLine() )
 							let rightline = diffArray.rightLines[rightOutputIndex]
 							rightline.text += String( addLineNo ) + "  " + entry + "\n"
 							rightline.show = true
@@ -192,19 +181,19 @@ class DetailViewModel {
 							if remSequence > 0 {
 								remSequence -= 1
 							} else {
-								diffArray.leftLines.append( GhostLine() )
+								diffArray.leftLines.append( DisplayLine() )
 								let leftline = diffArray.leftLines[leftOutputIndex]
 								leftline.text += String( remLineNo ) + "  " + entry + "\n"
 								leftline.show = false
 								leftOutputIndex += 1
 							}
 							addSequence += 1
-						} else {
-							diffArray.leftLines.append( GhostLine() )
+						} else {						// Lines should be the same
+							diffArray.leftLines.append( DisplayLine() )
 							let leftline = diffArray.leftLines[leftOutputIndex]
 							leftline.text += String( remLineNo ) + "  " + entry + "\n"
 							leftline.show = true
-							diffArray.rightLines.append( GhostLine() )
+							diffArray.rightLines.append( DisplayLine() )
 							let rightline = diffArray.rightLines[rightOutputIndex]
 							rightline.text += String( addLineNo ) + "  " + entry + "\n"
 							if remSequence > 0 {
@@ -218,7 +207,7 @@ class DetailViewModel {
 							leftOutputIndex += 1
 							addSequence = 0
 							if remSequence > 0 {
-								diffArray.rightLines.append( GhostLine() )
+								diffArray.rightLines.append( DisplayLine() )
 								let rightline = diffArray.rightLines[rightOutputIndex]
 								rightline.text += String( addLineNo ) + "  " + entry + "\n"
 								rightline.show = true
@@ -229,7 +218,6 @@ class DetailViewModel {
 							}
 						}
 					}
-					inputIndex += 1
 				}
 				fileDiff.diffArray.append( diffArray )
 			}

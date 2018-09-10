@@ -22,15 +22,12 @@ class PullDiffCell: UITableViewCell {
 		showDiffs.text = header
 		
 		guard let data = data else {
-			let ghost = GhostLine()
-			ghost.text = " "
-			ghost.show = true
-			ghost.add = false
-			ghost.remove = false
+			let displayLine = DisplayLine()
+			displayLine.show = true
 			height = 2.0
-			leftView.addSubview( getLabel( entry: ghost) )
+			leftView.addSubview( getLabel( entry: displayLine) )
 			height = 2.0
-			rightView.addSubview( getLabel( entry: ghost ) )
+			rightView.addSubview( getLabel( entry: displayLine ) )
 			rightHeightConstraint.constant = 2.0
 			leftHeightConstraint.constant = 2.0
 			return
@@ -45,22 +42,22 @@ class PullDiffCell: UITableViewCell {
 		height = 2.0
 		for entry in data.leftLines {
 			leftView.addSubview( getLabel( entry: entry ) )
-			height += 12.0
+			height += 14.0
 		}
 		leftHeightConstraint.constant = height + 2.0
 		height = 2.0
 		for entry in data.rightLines {
 			rightView.addSubview( getLabel( entry: entry ) )
-			height += 12.0
+			height += 14.0
 		}
 		rightHeightConstraint.constant = height + 2.0
 	}
 	
-	private func getLabel( entry: GhostLine ) -> UILabel {
+	private func getLabel( entry: DisplayLine ) -> UILabel {
 		
-		let label = UILabel( frame: CGRect(x:  0.0, y: height, width: leftView.frame.size.width, height: 12.0) )
+		let label = UILabel( frame: CGRect(x:  0.0, y: height, width: leftView.frame.size.width, height: 14.0) )
 		label.numberOfLines = 1
-		label.font = UIFont.systemFont(ofSize: 12.0)
+		label.font = UIFont( name: "Courier", size: 12.0 )
 		label.lineBreakMode = .byClipping
 		label.text = entry.text
 		label.textColor = entry.show ? .black : .white

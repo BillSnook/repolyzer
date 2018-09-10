@@ -52,27 +52,34 @@ class MasterViewController: UITableViewController {
 	public func getResponse( _ data: Data?, _ error: Error? ) -> Void {
 	
 		if let err = error {
-			print( "Alert - error from sendRequest: \(err.localizedDescription)" )
+			showAlert(title: "Warning", message: "Error from sendRequest: \(err.localizedDescription)")
 			return
 		}
-		guard let data = data else {
-			print( "Alert - no data from sendRequest" )
+		guard let data = data, !data.isEmpty else {
+			showAlert(title: "Warning", message: "No data received from sendRequest")
 			return
 		}
 		
 		let decoder = JSONDecoder()
 		do {
 			pullRequests = try decoder.decode([PullRequest].self, from: data)
-			print( "Number of pull requests: \(pullRequests.count)" )
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
 		} catch {
-			print("Error converting data to JSON: \(error.localizedDescription)" )
+			showAlert(title: "Warning", message: "Error converting data to JSON: \(error.localizedDescription)")
 		}
 
 	}
 
+	func showAlert( title: String, message: String ) {
+		
+		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+		alertController.addAction(defaultAction)
+		present(alertController, animated: true, completion: nil)
+	}
+	
 	// MARK: - Segues
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
