@@ -40,12 +40,6 @@ class MasterViewController: UITableViewController {
 		tableView.estimatedRowHeight = 64.0
 		tableView.rowHeight = UITableViewAutomaticDimension
 		
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-		super.viewWillAppear(animated)
-
 		let defaults = UserDefaults.standard
 		if let ud_account = defaults.string( forKey: "GithubAccount") {
 			account = ud_account
@@ -55,6 +49,12 @@ class MasterViewController: UITableViewController {
 		}
 		
 		session.sendRequest( "https://api.github.com/repos/\(account)/\(repository)/pulls", completion: getResponse )
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+		super.viewWillAppear(animated)
+
 	}
 
 	override func didReceiveMemoryWarning() {
