@@ -23,10 +23,15 @@ class MasterViewController: UITableViewController {
 	var session = SessionManager()
 	var pullRequests: [PullRequest] = []
 
+	var account = "magicalpanda"
+	var repository = "MagicalRecord"
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(bringUpModal(_:)))
+		navigationItem.rightBarButtonItem = addButton
+
 		if let split = splitViewController {
 		    let controllers = split.viewControllers
 		    detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -35,12 +40,21 @@ class MasterViewController: UITableViewController {
 		tableView.estimatedRowHeight = 64.0
 		tableView.rowHeight = UITableViewAutomaticDimension
 		
-		session.sendRequest( "https://api.github.com/repos/magicalpanda/MagicalRecord/pulls", completion: getResponse )
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
 		super.viewWillAppear(animated)
+
+		let defaults = UserDefaults.standard
+		if let ud_account = defaults.string( forKey: "GithubAccount") {
+			account = ud_account
+		}
+		if let ud_repository = defaults.string( forKey: "GithubRepository") {
+			repository = ud_repository
+		}
+		
+		session.sendRequest( "https://api.github.com/repos/\(account)/\(repository)/pulls", completion: getResponse )
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -80,6 +94,15 @@ class MasterViewController: UITableViewController {
 		present(alertController, animated: true, completion: nil)
 	}
 	
+	@objc
+	func bringUpModal(_ sender: Any) {
+		if let VC = self.storyboard?.instantiateViewController(withIdentifier: "ParamEntryVC") {
+			self.present(VC, animated: true, completion: nil)
+		}
+		
+	}
+	
+
 	// MARK: - Segues
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

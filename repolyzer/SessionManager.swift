@@ -10,8 +10,6 @@ import Foundation
 
 public typealias RepoResponse = ( _ data: Data?, _ error: Error? ) -> Void
 
-let authenticateKey = "billsnook:sidewinder1.1"
-
 
 class SessionManager {
 	
@@ -29,7 +27,6 @@ class SessionManager {
 			urlComponents.query = "state=open"
 			guard let url = urlComponents.url else { return }
 			var urlRequest = URLRequest.init(url: url)
-			urlRequest.setValue( "Basic \(authenticateKey)", forHTTPHeaderField: "Authorization" )
 			dataTask = repoSession.dataTask(with: urlRequest) { data, response, error in
 				defer { self.dataTask = nil }
 				if let error = error {

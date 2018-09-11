@@ -9,16 +9,8 @@
 import UIKit
 
 
-let showRawData = false		// For testing
-
-let maxDiffRows = 8
-let nominalSectionHeaderHeight: CGFloat = 36.0
-
-
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-	@IBOutlet weak var detailDescriptionLabel: UILabel!
-	@IBOutlet weak var headerView: UIView!
 	@IBOutlet weak var diffTable: UITableView!
 	
 	@IBOutlet weak var diffTitle: UILabel!
@@ -30,37 +22,18 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 	
 	var viewModel: DetailViewModel?
 
+	let maxDiffRows = 8
+	var nominalSectionHeaderHeight: CGFloat = 36.0
+	
+
 	func configureView() {
 		
 		guard let data = diffData else {
-			if let label = self.detailDescriptionLabel {
-				headerView.isHidden = true
-				diffTable.isHidden = true
-				label.isHidden = false
-				label.textAlignment = .left
-				label.text = "Diffs are being accessed - please wait"
-			}
 			return
 		}
-		if let label = self.detailDescriptionLabel {
-			if showRawData {
-				label.isHidden = false
-				label.textAlignment = .left
-				label.text = String( data: data, encoding: String.Encoding.utf8 )
-			} else {
-				label.isHidden = true
-			}
-		}
 
-		if showRawData {
-			headerView.isHidden = true
-			diffTable.isHidden = true
-		} else {
-			viewModel = DetailViewModel( with: data )
-			headerView.isHidden = false
-			diffTable.isHidden = false
-			diffTable.reloadData()
-		}
+		viewModel = DetailViewModel( with: data )
+		diffTable.reloadData()
 	}
 
 	override func viewDidLoad() {
@@ -71,6 +44,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 		}
 		diffState?.text = pullRequest?.state
 		diffTitle?.text = pullRequest?.title
+
+		if UIDevice.current.userInterfaceIdiom == .phone {
+			nominalSectionHeaderHeight = 24.0
+		}
 
 //		configureView()
 	}
