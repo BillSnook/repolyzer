@@ -71,4 +71,12 @@ class ParamEntryVC: UIViewController {
 		dismiss(animated: true, completion: nil)
 	}
 	
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if let _ = touches.first{
+            view.endEditing(true)
+            
+        }
+    }
+
 }
